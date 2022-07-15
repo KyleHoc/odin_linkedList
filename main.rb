@@ -69,6 +69,19 @@ class LinkedList
         end
         puts " nil"
     end
+
+    def insert_at (value, index)
+        my_node = Node.new()
+        my_node.value = value
+        @list.insert(index, my_node)
+        @list[index].next_node = @list[index + 1]
+        @list[index - 1].next_node = my_node
+    end
+
+    def remove_at(index)
+        @list.delete_at(index)
+        @list[index - 1].next_node = @list[index]
+    end
 end
 
 class Node
@@ -86,9 +99,20 @@ end
 my_list = LinkedList.new()
 my_list.append(50)
 my_list.append(275)
-my_list.append (13)
+my_list.append(13)
 
 my_list.to_s()
 my_list.prepend(21)
 my_list.to_s()
-puts my_list.at(0).next_node.next_node.value
+my_list.insert_at(999, 2)
+my_list.to_s()
+my_list.remove_at(3)
+my_list.to_s
+puts my_list.at(0).next_node.next_node.next_node.value
+
+#Output:
+#( 50 ) -> ( 275 ) -> ( 13 ) ->  nil
+#( 21 ) -> ( 50 ) -> ( 275 ) -> ( 13 ) ->  nil
+#( 21 ) -> ( 50 ) -> ( 999 ) -> ( 275 ) -> ( 13 ) ->  nil
+#( 21 ) -> ( 50 ) -> ( 999 ) -> ( 13 ) ->  nil
+#13
